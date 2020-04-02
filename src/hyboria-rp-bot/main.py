@@ -25,7 +25,7 @@ class BotConfig(configparser.ConfigParser):
             'server': {
                 'ip': None,
                 'port': None,
-                'name' : None,
+                'name': None,
             }
         }
 
@@ -61,7 +61,7 @@ else:
 TOKEN = config.get('discord', 'token')
 address = (config.get('server', 'ip'), config.getint('server', 'port'))
 name = config.get('server', 'name')
-mychannel = config.getint('discord','channel')
+mychannel = config.getint('discord', 'channel')
 
 
 async def async_a2s_info(addr):
@@ -86,11 +86,10 @@ class MyClient(discord.Client):
 
     async def my_background_task(self):
         await self.wait_until_ready()
-        channel = self.get_channel(mychannel)  # TODO channel ID goes here make it configurable
+        channel = self.get_channel(mychannel)
         while not self.is_closed():
             i = await async_a2s_info(address)
-            await discord.VoiceChannel.edit(channel,
-                                            name="Online Players : " + str(i.player_count) + " / " + str(i.max_players))  # TODO make this a f string
+            await discord.VoiceChannel.edit(channel, name=f"Online Players : {i.player_count} / {i.max_players}")
             await asyncio.sleep(60)  # task runs every 60 seconds
 
 
