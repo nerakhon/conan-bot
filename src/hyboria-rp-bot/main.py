@@ -53,6 +53,7 @@ try:
     config = BotConfig('conan-bot.ini')
 except MyException as e:
     print(e)
+    exit(1)
 else:
     if config['bot'].getboolean('debug', fallback=False):
         logging.basicConfig(level=logging.DEBUG)
