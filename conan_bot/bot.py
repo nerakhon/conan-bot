@@ -6,7 +6,6 @@ import a2s
 
 from conan_bot.config import config
 
-
 if config['bot'].getboolean('debug', fallback=False):
     logging.basicConfig(level=logging.DEBUG)
 
@@ -34,7 +33,7 @@ class MyClient(discord.Client):
         print(self.user.id)
         print('------')
         activity = discord.Activity(name=name, type=discord.ActivityType.watching)
-        await client.change_presence(activity=activity)
+        await self.change_presence(activity=activity)
 
     async def my_background_task(self):
         await self.wait_until_ready()
@@ -45,6 +44,10 @@ class MyClient(discord.Client):
             await asyncio.sleep(60)  # task runs every 60 seconds
 
 
-if __name__ == "__main__":
+def main():
     client = MyClient()
     client.run(TOKEN)
+
+
+if __name__ == "__main__":
+    main()
