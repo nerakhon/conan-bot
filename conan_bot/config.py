@@ -12,6 +12,9 @@ class BotConfig(configparser.ConfigParser):
         self.validate_config()
 
     def validate_config(self):
+        section = None
+        keys = None
+
         required_values = {
             'discord': {
                 'token': None,
@@ -40,3 +43,12 @@ class BotConfig(configparser.ConfigParser):
                     raise MyException((
                                               'Invalid value for %s under section %s in ' +
                                               'the config file') % (key, section))
+
+
+config = {}
+
+try:
+    config = BotConfig('conan-bot.ini')
+except MyException as e:
+    print(e)
+    exit(1)

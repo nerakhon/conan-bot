@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import setup,find_packages
 
 setup(
-    name='conan-bot',
+    name='conan_bot',
     version='1.0',
-    packages=[''],
+    packages=find_packages('.'),
     url='',
     license='BSD',
     author='Jan Paul',

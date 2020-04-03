@@ -4,23 +4,16 @@ import logging
 import discord
 import a2s
 
-from .config import MyException, BotConfig
+from conan_bot.config import config
 
-config = {}
 
-try:
-    config = BotConfig('conan-bot.ini')
-except MyException as e:
-    print(e)
-    exit(1)
-else:
-    if config['bot'].getboolean('debug', fallback=False):
-        logging.basicConfig(level=logging.DEBUG)
+if config['bot'].getboolean('debug', fallback=False):
+    logging.basicConfig(level=logging.DEBUG)
 
 TOKEN = config.get('discord', 'token')
 address = (config.get('server', 'ip'), config.getint('server', 'port'))
 name = config.get('server', 'name')
-mychannel = config.getint('discord', 'channel')
+status_channel = config.getint('discord', 'channel')
 
 
 async def async_a2s_info(addr):
@@ -45,7 +38,7 @@ class MyClient(discord.Client):
 
     async def my_background_task(self):
         await self.wait_until_ready()
-        channel = self.get_channel(mychannel)
+        channel = self.get_channel(status_channel)
         while not self.is_closed():
             i = await async_a2s_info(address)
             await discord.VoiceChannel.edit(channel, name=f"Online Players : {i.player_count} / {i.max_players}")
