@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='conan_bot',
-    version='1.0.1',
+    version='1.0.2',
     packages=find_packages('.'),
     url='https://github.com/nerakhon/conan-bot',
     license='MIT',

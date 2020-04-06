@@ -4,6 +4,9 @@ import logging
 import discord
 import a2s
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('conan-bot')
+
 from conan_bot.config import config
 
 if config['bot'].getboolean('debug', fallback=False):
@@ -28,10 +31,7 @@ class MyClient(discord.Client):
         self.bg_task = self.loop.create_task(self.my_background_task())
 
     async def on_ready(self):
-        print('Logged in as')
-        print(self.user.name)
-        print(self.user.id)
-        print('------')
+        logger.info(f'Logged in as {self.user.name} {self.user.id} starting updates')
         activity = discord.Activity(name=name, type=discord.ActivityType.watching)
         await self.change_presence(activity=activity)
 
